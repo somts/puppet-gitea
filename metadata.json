@@ -2,55 +2,30 @@
   "name": "puppet-gitea",
   "version": "0.1.0",
   "author": "Ship Operations & Marine Technical Support",
-  "summary": "",
+  "summary": "manage Gitea",
   "license": "BSD 2-Clause License",
-  "source": "",
+  "source": "https://github.com/somts/puppet-gitea",
   "dependencies": [
-
+    { "name": "puppet/archive",
+      "version_requirement": ">= 5.0.0 < 6.0.0" },
+    { "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 7.1.0 < 8.0.0" },
+    { "name": "puppet/systemd",
+      "version_requirement": ">= 3.0.0 < 4.0.0" },
+    { "name": "puppetlabs/inifile",
+      "version_requirement": ">= 5.1.0 < 6.0.0" }
   ],
   "operatingsystem_support": [
-    {
-      "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "OracleLinux",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "RedHat",
-      "operatingsystemrelease": [
-        "8"
-      ]
-    },
-    {
-      "operatingsystem": "Scientific",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "Debian",
-      "operatingsystemrelease": [
-        "10"
-      ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "18.04"
-      ]
-    }
+    { "operatingsystem": "CentOS", "operatingsystemrelease": ["7", "8"] },
+    { "operatingsystem": "Debian", "operatingsystemrelease": ["10"] },
+    { "operatingsystem": "FreeBSD", "operatingsystemrelease": ["12"] },
+    { "operatingsystem": "OracleLinux", "operatingsystemrelease": ["7", "8"] },
+    { "operatingsystem": "RedHat", "operatingsystemrelease": ["8"] },
+    { "operatingsystem": "Scientific", "operatingsystemrelease": ["7"] },
+    { "operatingsystem": "Ubuntu", "operatingsystemrelease": ["18.04", "20.04"] }
   ],
   "requirements": [
-    {
-      "name": "puppet",
-      "version_requirement": ">= 6.21.0 < 8.0.0"
-    }
+    { "name": "puppet", "version_requirement": ">= 6.21.0 < 8.0.0" }
   ],
   "pdk-version": "2.4.0",
   "template-url": "pdk-default#2.4.0",

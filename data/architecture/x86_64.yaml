@@ -1,0 +1,4 @@
+# x86_64 needs override to amd64 (EG macOS, RedHat variants)
+---
+gitea::package_architecture: 'amd64'
+...

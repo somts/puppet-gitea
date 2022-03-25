@@ -1,1 +1,92 @@
---- {}
+---
+# We generally want our default hashes, to only be overridden
+# when explicit set, so merge hashes.
+# See https://docs.puppet.com/puppet/5.5/hiera_merging.html
+lookup_options:
+  gitea::defaults_directory: {merge: {strategy: hash}}
+  gitea::defaults_file: {merge: {strategy: hash}}
+  gitea::defaults_group: {merge: {strategy: hash}}
+  gitea::defaults_package: {merge: {strategy: hash}}
+  gitea::defaults_user: {merge: {strategy: hash}}
+  gitea::ini:
+    merge: {strategy: deep, merge_hash_arrays: true}
+
+gitea::ini:
+  DEFAULT:
+    app_name: 'Gitea: Git with a cup of tea'
+    run_mode: 'prod'
+    run_user: 'git'
+  database:
+    db_type: 'sqlite3'
+    host: '127.0.0.1:3306'
+    name: 'gitea'
+    passwd:
+    path: '/var/opt/gitea/data/gitea.db'
+    ssl_mode: 'disable'
+    user: 'root'
+  lfs:
+    path: '/var/opt/gitea/data/lfs'
+    storage_type: 'local'
+  log:
+    enable_ssh_log: false
+    level: 'Info'
+    mode: 'console'
+    root_path: '/var/opt/gitea/log'
+    router: 'console'
+  mailer:
+    enabled: false
+  picture:
+    disable_gravatar: false
+    enable_federated_avatar: true
+  repository:
+    root: '/var/opt/gitea/data/gitea-repositories'
+  security:
+    disable_git_hooks: true
+  server:
+    app_data_path: '/var/opt/gitea/data'
+    disable_ssh: false
+    domain: 'localhost'
+    http_addr: '127.0.0.1'
+    http_port: 3000
+    lfs_start_server: false
+    offline_mode: false
+    protocol: 'http'
+    root_url: '%(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/'
+    ssh_domain: '%(DOMAIN)s'
+    ssh_port: 22
+gitea::ini_absent:
+  indexer:
+    - 'issue_indexer_queue_batch_number'
+    - 'issue_indexer_queue_conn_str'
+    - 'issue_indexer_queue_dir'
+    - 'issue_indexer_queue_type'
+    - 'update_buffer_len'
+  mailer:
+    - 'send_buffer_len'
+  repository:
+    - 'mirror_queue_length'
+    - 'pull_request_queue_length'
+  server:
+    - 'lfs_content_path'
+gitea::database_manage: false
+gitea::defaults_directory: {ensure: 'directory', owner: 'root', mode: '0750'}
+gitea::defaults_file: {ensure: 'file', owner: 'root', mode: '0640'}
+gitea::defaults_group: {ensure: 'present'}
+gitea::defaults_package: {ensure: 'present'}
+gitea::defaults_user: {ensure: 'present', managehome: true, system: true, membership: 'inclusive'}
+gitea::group: 'git'
+gitea::package_architecture: '%{facts.architecture}'
+gitea::package_baseurl: 'https://dl.gitea.io/gitea'
+gitea::package_kernel: '%{facts.kernel}'
+gitea::package_name:
+gitea::package_url:
+gitea::package_version: '1.16.4'
+gitea::packages_ensure:
+gitea::path_etc: '/opt/gitea/etc'
+gitea::path_home: '/var/opt/gitea'
+gitea::path_link: '/usr/local/bin/gitea'
+gitea::path_opt: '/opt/gitea'
+gitea::path_pid: '/var/run/gitea.pid'
+gitea::path_tmp: '/tmp'
+gitea::user: 'git'
+...

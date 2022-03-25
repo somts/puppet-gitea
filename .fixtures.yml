@@ -1,6 +1,10 @@
-# This file can be used to install module dependencies for unit testing
-# See https://github.com/puppetlabs/puppetlabs_spec_helper#using-fixtures for details
 ---
 fixtures:
+  symlinks:
+    profile: "#{File.dirname(source_dir)}/gitea"
   forge_modules:
-#     stdlib: "puppetlabs/stdlib"
+    archive: 'puppet/archive'
+    inifile: 'puppetlabs/inifile'
+    stdlib: 'puppetlabs/stdlib'
+    systemd: 'puppet/systemd'
+...

@@ -1,0 +1,41 @@
+<%- | String[1] $app_name,
+      Boolean $db_manage,
+      String[1] $db_type,
+      Stdlib::Absolutepath $etc,
+      Stdlib::Absolutepath $gitea_custom,
+      String[1] $gitea_group,
+      String[1] $gitea_user,
+      Stdlib::Absolutepath $gitea_work_dir,
+      Stdlib::Absolutepath $home,
+      Stdlib::Absolutepath $pidfile,
+      Stdlib::Absolutepath $procname,
+| -%>
+[Unit]
+After=network.target
+After=syslog.target
+Description="<%= $app_name %>"
+<%- if $db_manage and $db_type != 'sqlite3' { %>
+Requires=<%= $db_type %>.service
+<% } -%>
+
+[Service]
+# Per https://docs.gitea.io/en-us/command-line/
+Environment="GITEA_CUSTOM=<%= $gitea_custom
+%> GITEA_WORK_DIR=<%= $gitea_work_dir
+%> HOME=<%= $home
+%> USER=<%= $gitea_user
+%>"
+ExecStart="<%= $procname %> web --config <%= $etc
+%>/app.ini --custom-path <%= $gitea_custom
+%> --work-path <%= $gitea_work_dir
+%> --pid <%= $pidfile %>"
+Group=<%= $gitea_group %>
+PIDFile=<%= $pidfile %>
+Restart=always
+RestartSec=2s
+Type=simple
+User=<%= $gitea_user %>
+WorkingDirectory=<%= $gitea_work_dir %>
+
+[Install]
+WantedBy=multi-user.target

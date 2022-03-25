@@ -1,0 +1,9 @@
+# Debian family
+---
+gitea::packages_ensure:
+  - 'git'
+  - 'git-lfs'
+  - 'sqlite3'
+  - 'sqlite3-doc'
+  - 'xz-utils'
+...

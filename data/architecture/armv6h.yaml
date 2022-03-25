@@ -1,0 +1,4 @@
+# armv7l needs override to arm-6 (EG Raspberry Pi2)
+---
+gitea::package_architecture: 'arm-6'
+...

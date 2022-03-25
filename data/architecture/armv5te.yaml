@@ -1,0 +1,4 @@
+# armv5te needs override to arm-5
+---
+gitea::package_architecture: 'arm-5'
+...

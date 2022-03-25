@@ -1,0 +1,34 @@
+# FreeBSD
+---
+gitea::ini:
+  database:
+    path: '/var/db/gitea/gitea.db'
+  indexer:
+    issue_indexer_path: '/var/db/gitea/indexers/issues.bleve'
+  lfs:
+    path: '/var/lib/gitea/data/lfs'
+  log:
+    root_path: '/var/log/gitea'
+    mode: 'file'
+  picture:
+    avatar_upload_path: '/var/db/gitea/data/avatars'
+  repository:
+    root: '/var/db/gitea/gitea-repositories'
+    script_type: 'sh'
+  repository.upload:
+    temp_path: '/var/db/gitea/data/tmp/uploads'
+  session:
+    provider: 'file'
+    provider_config: '/var/db/gitea/data/sessions'
+  server:
+    app_data_path: '/var/db/gitea/data'
+  service:
+    register_email_confirm: false
+    enable_notify_mail: false
+    enable_captcha: true
+    require_signin_view: false
+gitea::package_name: 'gitea'
+gitea::packages_ensure: ['bash', 'git', 'git-lfs', 'sqlite3']
+gitea::path_etc: '/usr/local/etc/gitea/conf'
+gitea::path_home: '/usr/local/git'
+...

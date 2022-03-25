@@ -1,0 +1,11 @@
+# armv7l needs override to arm-5 (EG Raspberry Pi2)
+# Per https://docs.gitea.io/en-us/install-from-binary/ ...
+# Running Gitea on Raspbian
+# As of v1.8, there is a problem with the arm7 version of Gitea and it
+# doesn’t run on Raspberry Pi and similar devices.
+#
+# It is therefore recommended to switch to the arm6 version which has
+# been tested and shown to work on Raspberry Pi and similar devices.
+---
+gitea::package_architecture: 'arm-6'
+...

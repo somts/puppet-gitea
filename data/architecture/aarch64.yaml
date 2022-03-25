@@ -1,0 +1,4 @@
+# aarch64 needs override to arm64 (EG Raspberry Pi4)
+---
+gitea::package_architecture: 'arm64'
+...

@@ -1,0 +1,4 @@
+# RedHat family
+---
+gitea::packages_ensure: ['git', 'git-lfs', 'sqlite', 'xz']
+...
