@@ -14,10 +14,10 @@ describe 'gitea::install' do
       context 'with all defaults' do
         it do
           is_expected.to compile.and_raise_error(
-            /Must only be called by gitea\/init\.pp/)
+            %r{Must only be called by gitea\/init\.pp},
+          )
         end
       end
-
     end
   end
 end
