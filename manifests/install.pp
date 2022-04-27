@@ -40,6 +40,7 @@ class gitea::install {
         $package_url.split('/')[-1][0,-4],
     ], '/')
     $creates = $path_exe
+    $link_target = $path_exe
   } else {
     # EG https://dl.gitea.io/gitea/1.16.4/gitea-1.16.4-linux-arm64
     $archive_path = "${gitea::path_opt}/bin/${package_url.split('/')[-1]}"
@@ -48,6 +49,7 @@ class gitea::install {
     $extract = false
     $extract_path = undef
     $path_exe = $archive_path
+    $link_target = $path_exe
   }
 
   ## MANAGED RESOURCES
@@ -127,7 +129,7 @@ class gitea::install {
         };
       $gitea::path_link:  # convenience link, EG run `gitea admin`
         ensure  => 'link',
-        target  => $creates,
+        target  => $link_target,
         group   => $gitea::group,
         require => Archive['gitea'],;
     }
