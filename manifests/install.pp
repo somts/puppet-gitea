@@ -5,9 +5,10 @@ class gitea::install {
 
   ## VARIABLES
 
-  # Build the app URL when not explicitly provided. Prefer .xz as it is
-  # ~33%-50% the size of the uncompressed binary, which provides faster
-  # download speed. Downcase kernel string.
+  # Build the app URL when not explicitly provided. .xz is ~33%-50% the
+  # size of the uncompressed binary, which provides faster
+  # download speed, but the archive module cannot uncompress it.
+  # Downcase kernel string.
   $package_url = $gitea::package_url ? {
     undef   => join([
         $gitea::package_baseurl,
@@ -19,7 +20,6 @@ class gitea::install {
         $gitea::package_kernel.downcase,
         '-',
         $gitea::package_architecture,
-        '.xz',
     ], ''),
     default => $gitea::package_url,
   }
