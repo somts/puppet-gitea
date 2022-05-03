@@ -107,6 +107,7 @@ class gitea::install {
       extract      => $extract,
       extract_path => $extract_path,
       group        => $gitea::group,
+      mode         => '0755',
       source       => $package_url,
       require      => File["${gitea::path_opt}/bin"],
     }
