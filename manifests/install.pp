@@ -5,10 +5,7 @@ class gitea::install {
 
   ## VARIABLES
 
-  # Build the app URL when not explicitly provided. .xz is ~33%-50% the
-  # size of the uncompressed binary, which provides faster
-  # download speed, but the archive module cannot uncompress it.
-  # Downcase kernel string.
+  # Build the app URL when not provided. Downcase kernel string.
   $package_url = $gitea::package_url ? {
     undef   => join([
         $gitea::package_baseurl,
@@ -26,31 +23,8 @@ class gitea::install {
 
   # Once we know our URL, use the basename for our archive path
   # Conditionally set several variables based on .xz compression
-  if $package_url =~ /\.xz$/ {
-    # EG
-    # https://dl.gitea.io/gitea/1.16.4/gitea-1.16.4-darwin-10.12-arm64.xz
-    # https://dl.gitea.io/gitea/1.16.4/gitea-1.16.4-linux-amd64.xz
-    $archive_path = "${gitea::path_tmp}/${package_url.split('/')[-1]}"
-    $cleanup = true
-    $extract = true
-    $extract_path = "${gitea::path_opt}/bin"
-    $path_exe = join([
-        $gitea::path_opt,
-        'bin',
-        $package_url.split('/')[-1][0,-4],
-    ], '/')
-    $creates = $path_exe
-    $link_target = $path_exe
-  } else {
-    # EG https://dl.gitea.io/gitea/1.16.4/gitea-1.16.4-linux-arm64
-    $archive_path = "${gitea::path_opt}/bin/${package_url.split('/')[-1]}"
-    $cleanup = false
-    $creates = undef
-    $extract = false
-    $extract_path = undef
-    $path_exe = $archive_path
-    $link_target = $path_exe
-  }
+  # EG https://dl.gitea.io/gitea/1.16.4/gitea-1.16.4-linux-arm64
+  $archive_path = "${gitea::path_opt}/bin/${package_url.split('/')[-1]}"
 
   ## MANAGED RESOURCES
 
@@ -100,18 +74,6 @@ class gitea::install {
       before => File[$gitea::path_link],
     }
 
-    archive { 'gitea':
-      path         => $archive_path,
-      cleanup      => $cleanup,
-      creates      => $creates,
-      extract      => $extract,
-      extract_path => $extract_path,
-      group        => $gitea::group,
-      mode         => '0755',
-      source       => $package_url,
-      require      => File["${gitea::path_opt}/bin"],
-    }
-
     file {
       $gitea::path_etc:
         * => $gitea::defaults_directory + {
@@ -128,9 +90,14 @@ class gitea::install {
           group   => $gitea::group,
           require => Group[$gitea::group],
         };
+      $archive_path:
+        group   => $gitea::group,
+        mode    => '0750',
+        source  => $package_url,
+        require => File["${gitea::path_opt}/bin"],;
       $gitea::path_link:  # convenience link, EG run `gitea admin`
         ensure  => 'link',
-        target  => $link_target,
+        target  => $archive_path,
         group   => $gitea::group,
         require => Archive['gitea'],;
     }
