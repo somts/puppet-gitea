@@ -39,6 +39,12 @@ class gitea::install {
   }
 
   file {
+    $gitea::path_piddir:
+      * => $gitea::defaults_directory + {
+        group   => $gitea::group,
+        mode    => '0770',
+        require => Group[$gitea::group],
+      };
     "${gitea::path_etc}/app.ini":
       * => $gitea::defaults_file + {
         group   => $gitea::group,
@@ -94,6 +100,7 @@ class gitea::install {
         group   => $gitea::group,
         mode    => '0750',
         source  => $package_url,
+        notify  => Class['gitea::service'],
         require => File["${gitea::path_opt}/bin"],;
       $gitea::path_link:  # convenience link, EG run `gitea admin`
         ensure  => 'link',

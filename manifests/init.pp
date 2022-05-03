@@ -15,7 +15,8 @@
 # @param path_home $HOME of the gitea user
 # @param path_link path to symlink Gitea binary to EG /usr/local/bin/gitea
 # @param path_opt /opt-based path of Gitea
-# @param path_pid where to write pidfile EG /var/run/gitea.pid
+# @param path_piddir directory for pidfile EG /var/run/gitea
+# @param path_pid where to write pidfile EG /var/run/gitea/gitea.pid
 # @param path_tmp /tmp path for archive download(s)
 # @param package_architecture architecture to use for auto_URL EG amd64
 # @param package_baseurl Beginning segment of download auto-URL
@@ -44,6 +45,7 @@ class gitea (
   Stdlib::Absolutepath $path_home,
   Stdlib::Absolutepath $path_link,
   Stdlib::Absolutepath $path_opt,
+  Stdlib::Absolutepath $path_piddir,
   Stdlib::Absolutepath $path_pid,
   Stdlib::Absolutepath $path_tmp,
   String[1] $package_architecture,
