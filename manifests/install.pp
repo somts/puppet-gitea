@@ -24,7 +24,7 @@ class gitea::install {
   # Once we know our URL, use the basename for our archive path
   # Conditionally set several variables based on .xz compression
   # EG https://dl.gitea.io/gitea/1.16.4/gitea-1.16.4-linux-arm64
-  $archive_path = "${gitea::path_opt}/bin/${package_url.split('/')[-1]}"
+  $path_exe = "${gitea::path_opt}/bin/${package_url.split('/')[-1]}"
 
   ## MANAGED RESOURCES
 
@@ -90,14 +90,14 @@ class gitea::install {
           group   => $gitea::group,
           require => Group[$gitea::group],
         };
-      $archive_path:
+      $path_exe:
         group   => $gitea::group,
         mode    => '0750',
         source  => $package_url,
         require => File["${gitea::path_opt}/bin"],;
       $gitea::path_link:  # convenience link, EG run `gitea admin`
         ensure  => 'link',
-        target  => $archive_path,
+        target  => $path_exe,
         group   => $gitea::group,
         require => Archive['gitea'],;
     }
