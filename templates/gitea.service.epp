@@ -20,19 +20,15 @@ Requires=<%= $db_type %>.service
 
 [Service]
 # Per https://docs.gitea.io/en-us/command-line/
-Environment="GITEA_CUSTOM=<%= $gitea_custom
-%> GITEA_WORK_DIR=<%= $gitea_work_dir
+Environment="GITEA_WORK_DIR=<%= $gitea_work_dir
 %> HOME=<%= $home
 %> USER=<%= $gitea_user
 %>"
-ExecStart="<%= $procname %> web --config <%= $etc
-%>/app.ini --custom-path <%= $gitea_custom
-%> --work-path <%= $gitea_work_dir
-%> --pid <%= $pidfile %>"
+ExecStart=<%= $procname %> web --config <%= $etc %>/app.ini --pid <%= $pidfile %>
 Group=<%= $gitea_group %>
 PIDFile=<%= $pidfile %>
 Restart=always
-RestartSec=2s
+RestartSec=20s
 Type=simple
 User=<%= $gitea_user %>
 WorkingDirectory=<%= $gitea_work_dir %>
