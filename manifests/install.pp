@@ -99,7 +99,7 @@ class gitea::install {
         ensure  => 'link',
         target  => $path_exe,
         group   => $gitea::group,
-        require => Archive['gitea'],;
+        require => File[$path_exe],;
     }
   }
 
