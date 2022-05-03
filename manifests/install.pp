@@ -42,12 +42,13 @@ class gitea::install {
     $gitea::path_piddir:
       * => $gitea::defaults_directory + {
         group   => $gitea::group,
-        mode    => '0770',
+        mode    => '0770',  # writeable by daemon group
         require => Group[$gitea::group],
       };
     "${gitea::path_etc}/app.ini":
       * => $gitea::defaults_file + {
         group   => $gitea::group,
+        mode    => '0664',  # writeable by daemon group
         require => Group[$gitea::group],
       };
     $gitea::path_home:
