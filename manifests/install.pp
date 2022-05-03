@@ -48,7 +48,7 @@ class gitea::install {
     "${gitea::path_etc}/app.ini":
       * => $gitea::defaults_file + {
         group   => $gitea::group,
-        mode    => '0664',  # writeable by daemon group
+        mode    => '0660',  # writeable by daemon group
         require => Group[$gitea::group],
       };
     $gitea::path_home:
